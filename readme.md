@@ -30,14 +30,7 @@ CRI-Oを使用したKuberentetsの構築メモを残す
 
 
 * 初回時の実行コマンド
-sudo sh -c "cat <<EOF >>/etc/hosts
 
-192.168.223.200 host-pc
-192.168.223.201 registory
-192.168.223.210 k8s-master-1
-192.168.223.220 k8s-worker-01
-EOF
-"
 すべてのHOSTで実行する
 
 ```
@@ -56,9 +49,16 @@ ssh-copy-id karosu@k8s-master-1.local
 ssh-copy-id karosu@k8s-worker-01.local
 ```
 
-* hosts設定
-```:hosts
+hostsファイルの追加
+```
+sudo sh -c "cat <<EOF >>/etc/hosts
 
+192.168.223.200 host-pc
+192.168.223.201 registory
+192.168.223.210 k8s-master-1
+192.168.223.220 k8s-worker-01
+EOF
+"
 ```
 
 
@@ -67,24 +67,29 @@ ssh-copy-id karosu@k8s-worker-01.local
 ## hot-pc
 
 dockerのインストール
+```
 sudo apt install docker
+```
 
-kubeコマンドのインストール
-
+kubectlコマンドのインストール
+```
 sudo sh -c "curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg|sudo apt-key add -"
 sudo sh -c 'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kube.list'
 sudo apt update
 sudo apt install -y kubectl
+```
 
 ## registory
 
 dockerのインストール
+```
 sudo apt install docker
+```
 
 ## k8s-master-1
 
 cri-oのインストール
-
+```
 sudo modprobe overlay
 sudo modprobe br_netfilter
 
@@ -113,35 +118,45 @@ sudo apt-get install cri-o cri-o-runc
 
 sudo systemctl daemon-reload
 sudo systemctl start crio -y
-
+```
 
 swapをOFFにする
+```
 sudo swapoff -a
 sudo sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab
-
+```
 kubeコマンドのインストール
-
+```
 sudo sh -c "curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg|sudo apt-key add -"
 sudo sh -c 'echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kube.list'
 sudo apt update
 sudo apt install -y kubelet kubectl kubeadm
+```
 
+cri-o用のkubelet設定ファイルを適応
+```
 sudo wget -O /etc/default/kubelet https://gist.githubusercontent.com/haircommander/2c07cc23887fa7c7f083dc61c7ef5791/raw/73e3d27dcd57e7de237c08758f76e0a368547648/cri-o-kubeadm
+```
 
 kubernetesの初期化
+```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
 mkdir -p $HOME/.kube
 sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
 
 joinを調べるスクリプト
-
+```
 echo sudo kubeadm join $(hostname -I|awk '{print $1}'):6443 --token $(kubeadm token list |sed -n 2P|awk '{print $1}') --discovery-token-ca-cert-hash sha256:$(openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //')
+```
 
 ## k8s-worker-01
 
+```
 sudo kubeadm join 192.168.223.210:6443 --token roodeq.5e15i0m9qgnox7k5 --discovery-token-ca-cert-hash sha256:c954f1bb27a4a085b5a1c3bf1ef60569e0226fba309fbe350d4bb660abbd817b
+```
 
 ## kuberentes構築後
 
