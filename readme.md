@@ -86,6 +86,11 @@ dockerのインストール
 sudo apt install docker
 ```
 
+docker-composeのインストール
+```
+sudo apt install docker-compose
+```
+
 ## k8s-master-1
 
 cri-oのインストール
