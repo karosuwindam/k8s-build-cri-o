@@ -91,6 +91,16 @@ docker-composeのインストール
 sudo apt install docker-compose
 ```
 
+nfsのセットアップ
+```
+sudo apt install nfs-kernel-server
+```
+
+nfsのエージェント導入
+```
+sudo apt install nfs-common
+```
+
 ## k8s-master-1
 
 cri-oのインストール

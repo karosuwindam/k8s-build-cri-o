@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv__N__
+  annotations:
+    volume.beta.kubernetes.io/storage-class: "slow"
+spec:
+  capacity:
+    storage: 2Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Recycle
+  nfs:
+    server: registory
+    path: /var/nfs/pv__N__
