@@ -40,26 +40,28 @@ sudo apt update && sudo apt upgrade -y && sudo apt install curl git ssh -y
 # 個別作業前準備
 * host-pc
 
-ssh-key交換
-```
-ssh-keygen
-ssh-copy-id karosu@host-pc.local
-ssh-copy-id karosu@registory.local
-ssh-copy-id karosu@k8s-master-1.local
-ssh-copy-id karosu@k8s-worker-01.local
-```
 
 hostsファイルの追加
 ```
 sudo sh -c "cat <<EOF >>/etc/hosts
 
 192.168.223.200 host-pc
-192.168.223.201 registory
-192.168.223.210 k8s-master-01
-192.168.223.220 k8s-worker-01
+192.168.223.201 disk-nas
+192.168.223.210 master-01
+192.168.223.220 worker-01
 EOF
 "
 ```
+
+ssh-key交換
+```
+ssh-keygen
+ssh-copy-id karosu@host-pc
+ssh-copy-id karosu@disk-nas
+ssh-copy-id karosu@master-01
+ssh-copy-id karosu@worker-01
+```
+
 
 ## host-pc
 ansibeをインストールする
