@@ -6,27 +6,27 @@ CRI-Oを使用したKuberentetsの構築メモを残す
 
 |ホスト名|CPU|Mem|ネットワーク|OS|
 |--|--|--|--|--|
-|host-pc|2|40GB|NAT+ブリッジ|Ubuntu 20.10|
-|registory|2|20GB|NAT|Ubuntu 20.10|
-|k8s-worker-01|2|20GB|NAT|Ubuntu 20.10|
-|k8s-master-1|2|20GB|NAT|Ubuntu 20.10|
+|host-pc|2|40GB|NAT+ブリッジ|Ubuntu 21.04|
+|disk-nas|2|20GB|NAT|Ubuntu 21.04|
+|worker-01|2|20GB|NAT|Ubuntu 21.04|
+|master-01|2|20GB|NAT|Ubuntu 21.04|
 
 
 * IP設定
 
 ### ホスト別
-|ホスト名|ブリッジ|NAT|
+|ホスト名|NAT|ブリッジ|
 |--|--|--|
 |host-pc|192.168.223.200/24|192.168.0.200/24|
-|registory|192.168.223.201/24|-|
-|k8s-master-1|192.168.223.210/24|-|
-|k8s-worker-01|192.168.223.220/24|-|
+|disk-nas|192.168.223.201/24|-|
+|master-01|192.168.223.210/24|-|
+|worker-01|192.168.223.220/24|-|
 
 ### 共通設定
 ||Gateway|DNS|
 |--|--|--|
 |ブリッジ|192.168.0.1|192.168.0.1|
-|NAT|192.168.223.2|192.168.223.2|
+|NAT|192.168.223.2|192.168.223.2,192.168.223.200|
 
 
 * 初回時の実行コマンド
@@ -55,16 +55,26 @@ sudo sh -c "cat <<EOF >>/etc/hosts
 
 192.168.223.200 host-pc
 192.168.223.201 registory
-192.168.223.210 k8s-master-1
+192.168.223.210 k8s-master-01
 192.168.223.220 k8s-worker-01
 EOF
 "
 ```
 
+## host-pc
+ansibeをインストールする
+
+ansibleで構築する
+
+haproxy
+dnsサーバーを構築する
+
+
+
 
 # 作業メモ
 
-## hot-pc
+## host-pc
 
 dockerのインストール
 ```
