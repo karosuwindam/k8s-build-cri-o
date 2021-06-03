@@ -64,7 +64,10 @@ ssh-copy-id karosu@worker-01
 
 
 ## host-pc
-ansibeをインストールする
+ansibleをインストールする
+```
+sudo apt install ansible
+```
 
 ansibleで構築する
 

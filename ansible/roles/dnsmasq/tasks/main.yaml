@@ -1,0 +1,11 @@
+- name: dnsmasqのインストール
+  apt:
+    name: dnsmasq
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+- name: crio自動起動登録
+  service:
+    name: crio
+    enabled: yes
+    state: started

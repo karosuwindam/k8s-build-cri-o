@@ -3,6 +3,11 @@
   become: true
   roles:
     - role: aptupdate
+# dnsサーバ構築
+- hosts: build
+  become: true
+  roles:
+    - role: dnsmasq
 # cri-oのインストール
 - hosts: all
   become: true
