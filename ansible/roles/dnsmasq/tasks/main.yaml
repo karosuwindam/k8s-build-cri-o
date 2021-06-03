@@ -4,8 +4,15 @@
     state: latest
     update_cache: true
     cache_valid_time: 3600
-- name: crio自動起動登録
+- name: dnsmasq.conf copy
+  template: src=templates/dnsmasq.conf dest=/etc/dnsmasq.conf #mode=0644
+- name: systemd-resolved 自動起動停止
   service:
-    name: crio
+    name: systemd-resolved
+    enabled: no
+    state: stopped
+- name: dnsmasq自動起動登録
+  service:
+    name: dnsmasq
     enabled: yes
     state: started

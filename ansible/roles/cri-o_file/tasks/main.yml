@@ -35,7 +35,7 @@
     state: started
 - name: copy crio.conf
   template: src=templates/crio.conf dest=/etc/crio/crio.conf #mode=0644
-- name: モジュール登録
-  template: src=templates/k8s.conf dest=/etc/modules-load.d/k8s.conf
+# - name: モジュール登録
+#   template: src=templates/k8s.conf dest=/etc/modules-load.d/k8s.conf
 # - reboot:
  
