@@ -1,0 +1,46 @@
+# update upgrade
+- hosts: all
+  become: true
+  roles:
+    - role: aptupdate
+# cri-oのインストール
+- hosts: all
+  become: true
+  vars:
+    os: xUbuntu_20.04
+    version: "1.20"
+  roles:
+    - role: cri-o_file
+# kubeコマンドのインストール
+- hosts: kuberenetes
+  become: true
+  roles:
+    - role: k8s-cri-o
+# # マスターの構築
+# - hosts: master
+#   vars:
+#     cri_url: https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml #flannel
+#     # cri_url: https://docs.projectcalico.org/manifests/calico.yaml #calico
+#   roles:
+#     - role: kubeadm_init
+#     - role: kubeadm_get
+# # workerの構築
+# - hosts: worker
+#   roles:
+#     - role: kubeadm_add
+# #kuberentesのadmin.confの情報を取得する
+# - hosts: master
+#   become: true
+#   roles:
+#     - role: get_kubectl_adminconf
+# #Dockerとkubeコマンドが実行できるようにする。
+# - hosts: localhost
+#   roles:
+#     - role: docker_file
+#     - role: add_kubectl
+#     - role: add_kubectl_adminconf
+# #operaterを構築する
+# - hosts: localhost
+#   become: true
+#   roles:
+#     - role: operater_sdk_install

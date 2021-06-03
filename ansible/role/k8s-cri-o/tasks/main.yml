@@ -1,0 +1,35 @@
+- name: IPフォワード登録
+  template: src=templates/k8s_ip.conf dest=/etc/sysctl.d/k8s.conf
+- reboot:
+- name: kubernetesのapt-key
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+- name: kubernetesの追加
+  apt_repository: 
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+- name: kubeadmのインストール
+  apt:
+    name: kubeadm
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+- name: kubeletのインストール
+  apt:
+    name: kubelet
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+- name: kubectlのインストール
+  apt:
+    name: kubectl
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
+- name: kubeletのcri-o設定
+  template: src=templates/kubelet dest=/etc/default/kubelet
+- name: SWAP OFF
+  command: swapoff -a
+- name: SWAP OFF fstab
+  command: sed -i '/ swap / s/^\(.*\)$/#\1/g' /etc/fstab

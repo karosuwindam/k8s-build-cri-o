@@ -1,0 +1,18 @@
+# update upgrade
+- hosts: all
+  become: true
+  roles:
+    - role: aptupdate
+# cri-oのインストール
+- hosts: all
+  become: true
+  vars:
+    os: xUbuntu_20.04
+    version: "1.20"
+  roles:
+    - role: cri-o_file
+# kubeコマンドのインストール
+- hosts: kuberenetes
+  become: true
+  roles:
+    - role: k8s-cri-o

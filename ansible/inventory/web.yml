@@ -1,0 +1,25 @@
+all:
+  hosts:
+    host-pc:
+    disk-nas:
+    master-01:
+    worker-01:
+  children:
+    build:
+      hosts:
+        host-pc:
+    nfsdisk:
+      hosts:
+        disk-nas:
+    master:
+      hosts:
+        master-01:
+    worker:
+      hosts:
+        worker-01:
+        disk-nas:
+    kuberenetes:
+      hosts:
+        master-01:
+        worker-01:
+        disk-nas:

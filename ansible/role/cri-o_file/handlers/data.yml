@@ -1,0 +1,4 @@
+- name: restart crio
+  service: name=crio state=restarted
+- name: start crio
+  service: name=crio enabled=yes state=started
