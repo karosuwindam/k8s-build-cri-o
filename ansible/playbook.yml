@@ -3,6 +3,11 @@
   become: true
   roles:
     - role: aptupdate
+# dnsサーバ構築
+- hosts: build
+  become: true
+  roles:
+    - role: dnsmasq
 # cri-oのインストール
 - hosts: all
   become: true
@@ -34,10 +39,10 @@
   roles:
     - role: get_kubectl_adminconf
 #podman kubectlコマンドが実行できるようにする。
-- hosts: localhost
+- hosts: build
   roles:
     # - role: docker_file
-    - role: add_podman
+    - role: podman
     - role: add_kubectl
     - role: add_kubectl_adminconf
 # #operaterを構築する
