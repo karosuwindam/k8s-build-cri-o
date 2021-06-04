@@ -1,0 +1,17 @@
+- name: kubernetesのapt-key
+  become: true
+  apt_key:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    state: present
+- name: kubernetesの追加
+  become: true
+  apt_repository: 
+    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    state: present
+- name: kubectlのインストール
+  become: true
+  apt:
+    name: kubectl
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600

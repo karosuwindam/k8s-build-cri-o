@@ -1,0 +1,28 @@
+- name: kubeadm init
+  shell: kubeadm init --pod-network-cidr=10.244.0.0/16
+  become: true
+- name: mkdir
+  shell: mkdir -p $HOME/.kube
+- name: home read
+  shell: echo $HOME
+  register: home
+  failed_when: false
+  changed_when: false
+- name: get userid
+  shell: echo $(id -u)
+  register: user_id
+  failed_when: false
+  changed_when: false
+- name: get groupid
+  shell: echo $(id -g)
+  register: group_id
+  failed_when: false
+  changed_when: false
+- name: cp admin.conf
+  shell: cp -i /etc/kubernetes/admin.conf {{ home.stdout }}/.kube/config
+  become: true
+- name: chmod config
+  shell: sudo chown {{ user_id.stdout }}:{{ group_id.stdout }} {{ home.stdout }}/.kube/config
+  become: true
+- name: CRI read
+  shell: kubectl apply -f {{ cri_url }}

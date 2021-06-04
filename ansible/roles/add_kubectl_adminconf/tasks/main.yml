@@ -1,0 +1,11 @@
+#admin.confのデータをコピーする
+- name: creata folder
+  file:
+    path: "{{ lookup('env','HOME') }}/.kube/"
+    state: directory
+    mode: '0755'
+- name: create
+  copy:
+    dest: "{{ lookup('env','HOME') }}/.kube/config"
+    content: "{{ hostvars[groups.master[0]].admin_conf.stdout }}"
+    mode: '0644'

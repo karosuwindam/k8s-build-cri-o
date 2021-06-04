@@ -1,0 +1,5 @@
+- name: get admin.conf
+  shell: cat /etc/kubernetes/admin.conf
+  register: admin_conf
+  failed_when: false
+  changed_when: false

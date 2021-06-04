@@ -1,0 +1,4 @@
+---
+master_node: "{{ hostvars[groups.master[0]].ipaddr.stdout }}"
+token: "{{ hostvars[groups.master[0]].m_token.stdout }}"
+ca_cert: "{{ hostvars[groups.master[0]].ca_cert_hash.stdout }}"

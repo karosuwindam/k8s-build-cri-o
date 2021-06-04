@@ -1,0 +1,9 @@
+- name: kubeadm get ip
+  shell: hostname -I|awk '{print $1}'
+  register: ipaddr
+- name: kubeadm get token
+  shell: kubeadm token list |sed -n 2P|awk '{print $1}'
+  register: m_token
+- name: kubeadm get ca-cert-hash cha256
+  shell: openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'
+  register: ca_cert_hash
