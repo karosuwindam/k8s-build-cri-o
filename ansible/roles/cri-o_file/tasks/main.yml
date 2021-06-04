@@ -33,9 +33,17 @@
     name: crio
     enabled: yes
     state: started
+- name: Add the overlay module
+  community.general.modprobe:
+    name: overlay
+    state: present
+- name: Add the br_netfilter module
+  community.general.modprobe:
+    name: br_netfilter
+    state: present
 - name: copy crio.conf
   template: src=templates/crio.conf dest=/etc/crio/crio.conf #mode=0644
-# - name: モジュール登録
-#   template: src=templates/k8s.conf dest=/etc/modules-load.d/k8s.conf
+- name: モジュール登録
+  template: src=templates/k8s.conf dest=/etc/modules-load.d/k8s.conf
 # - reboot:
  
