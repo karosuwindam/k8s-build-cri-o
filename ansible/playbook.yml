@@ -33,10 +33,11 @@
   become: true
   roles:
     - role: get_kubectl_adminconf
-#kubectlコマンドが実行できるようにする。
+#podman kubectlコマンドが実行できるようにする。
 - hosts: localhost
   roles:
     # - role: docker_file
+    - role: add_podman
     - role: add_kubectl
     - role: add_kubectl_adminconf
 # #operaterを構築する

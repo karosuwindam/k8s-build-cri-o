@@ -1,27 +1,32 @@
-# update upgrade
-- hosts: all
+# # update upgrade
+# - hosts: all
+#   become: true
+#   roles:
+#     - role: aptupdate
+# # dnsサーバ構築
+# - hosts: build
+#   become: true
+#   roles:
+#     - role: dnsmasq
+# # cri-oのインストール
+# - hosts: all
+#   become: true
+#   vars:
+#     os: xUbuntu_20.04
+#     version: "1.21"
+#   roles:
+#     - role: cri-o_file
+# - hosts: build
+#   become: true
+#   roles:
+#     - role: podman
+# # kubeコマンドのインストール
+# - hosts: kuberenetes
+#   become: true
+#   roles:
+#     - role: k8s-cri-o
+# Podmanコマンドのインストール
+- hosts: localhost
   become: true
   roles:
-    - role: aptupdate
-# dnsサーバ構築
-- hosts: build
-  become: true
-  roles:
-    - role: dnsmasq
-# cri-oのインストール
-- hosts: all
-  become: true
-  vars:
-    os: xUbuntu_20.04
-    version: "1.21"
-  roles:
-    - role: cri-o_file
-- hosts: build
-  become: true
-  roles:
-    - role: podman
-# kubeコマンドのインストール
-- hosts: kuberenetes
-  become: true
-  roles:
-    - role: k8s-cri-o
+    - role: add_podman
